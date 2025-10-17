@@ -6,10 +6,8 @@ interface AnimationContextType {
   drawerOpen: SharedValue<boolean>;
 }
 
-// Create the context
 const AnimationContext = createContext<AnimationContextType | null>(null);
 
-// Provider component
 export function AnimationProvider({ children }: { children: React.ReactNode }) {
   const drawerProgress = useSharedValue(0);
   const drawerOpen = useSharedValue(false);

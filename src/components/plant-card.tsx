@@ -17,8 +17,8 @@ export default function PlantCard({ item }: { item: any }) {
         />
       </View>
       <View className="flex-col justify-center gap-2 items-start mt-4">
-        <Text className="text-sm font-medium bg-black text-white rounded-xl px-2">
-          New
+        <Text className="text-sm font-medium bg-black text-white rounded-xl px-2 capitalize">
+          {item.status}
         </Text>
         <Text className="text-base font-medium">{item.name}</Text>
       </View>

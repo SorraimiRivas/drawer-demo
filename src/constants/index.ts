@@ -1,3 +1,4 @@
+// Not real names used here for demo purposes
 export const explore = [
   {
     id: 1,

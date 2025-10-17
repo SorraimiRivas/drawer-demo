@@ -112,6 +112,7 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
       isPanning.value = true;
     })
     .onUpdate((e) => {
+      // Only allow panning to the left
       if (e.translationX < 0) {
         panOffset.value = e.translationX;
       }
@@ -119,11 +120,13 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
     .onEnd((e) => {
       isPanning.value = false;
 
+      // If the pan is greater than the close threshold or the velocity is greater than 400, close the drawer
       if (
         Math.abs(e.translationX) > closeThreshold ||
         Math.abs(e.velocityX) > 400
       ) {
         // Close the drawer
+        // runOnJs is deprecated so a different approach is necessary in the future
         runOnJS(setDrawer)(false);
         panOffset.value = withTiming(0, { duration: 1 });
       } else {
@@ -150,6 +153,7 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
     };
   });
 
+  // Animationg for the underlay shadow behind the screen container
   const animatedContentShadowStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -240,7 +244,7 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
             </DrawerTrigger>
           </Animated.View>
         </View>
-        {/* Body */}
+        {/* Drawer Body */}
         <ScrollView
           contentContainerClassName="justify-center h-full"
           showsVerticalScrollIndicator={false}
@@ -259,7 +263,7 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
                 menuItems={menuItems}
               />
             ))}
-            {/* Footer */}
+            {/* Drawer Footer */}
             <Animated.View
               className="flex-row items-center justify-center gap-6"
               style={animatedLogoutStyle}
@@ -271,7 +275,7 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
         </ScrollView>
       </View>
 
-      {/* Main Content */}
+      {/* Main Content Container */}
       <View className="flex-1 relative">
         <Animated.View
           className="absolute inset-0 z-40 bg-white/30"
